@@ -9,55 +9,27 @@ using namespace std;
 int main() {
     /* Enter your code here. Read input from STDIN. Print output to STDOUT */   
     int N;
-    std::vector<int> vec;
-    int X;
     cin >> N;
-    for (int i = 0; i < N; i++) {
+    vector<int> vec;
+    vec.reserve(N);
+    
+    for (size_t i = 0; i < N; i++) {
+        int X;
         cin >> X;
         vec.push_back(X);
     }
-    //Edgecase: nothing in array
-    if(vec.size() == 0){
-        return 0;
-    }
+    
     int Q;
     cin >> Q;
-    int Y;
-    for (int i = 0; i < Q; i++) {
+    for (size_t i = 0; i < Q; i++) {
+        int Y;
         cin >> Y;
-        //Edgecase: only 1 element in array
-        if(vec.size() == 1){
-            if (vec[0] == Y) {
-                printf("Yes 1\n");
-            }else if(vec[0] < Y){
-                printf("No 2\n");
-            }else{
-                printf("No 1\n");
-            }
-            continue;
-        }
-       
-       int left = 0;
-       int right = vec.size() - 1; 
-       int value = -1;
-       int mid = -1;
-        while (left <= right) {
-            mid = left + ((right - left) / 2);
-            if (vec[mid] == Y){
-                value = mid;
-                right = mid - 1;
-            }
-            else if(vec[mid] < Y){
-                left = mid + 1;
-            }else {
-                right = mid -1;
-            }
-        }
-        
-        if(value != -1){
-            printf("Yes %d\n", value + 1);
-        }else {
-            printf("No %d\n", left + 1);
+        vector<int>::iterator it = lower_bound(vec.begin(), vec.end(), Y);
+        int pos = int(it - vec.begin()) + 1;
+        if(it != vec.end() && *it == Y){
+            printf("Yes %d\n", pos);
+        }else{
+            printf("No %d\n", pos);
         }
     }
     return 0;
