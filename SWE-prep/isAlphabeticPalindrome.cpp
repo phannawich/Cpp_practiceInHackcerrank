@@ -12,37 +12,25 @@ using namespace std;
  */
 
 bool isAlphabeticPalindrome(string code) {
-    
-    vector<char> letterOnlyCode;
-    for (char l : code) {
-        if (l >= 'A' && l <= 'Z') {
-            letterOnlyCode.push_back(std::tolower(l));
+    int left = 0;
+    int right = code.size() - 1;
+
+    while (left < right){
+        while (left < right && !isalpha(code[left])){
+            left++;
         }
-        if(l >= 'a' && l <= 'z'){
-            letterOnlyCode.push_back(l);
+        while (left < right && !isalpha(code[right])){
+            right--;
         }
-    }
-    
-    if((int)letterOnlyCode.size() <= 1){
-        return true;
-    }
-    
-    int check = 0;
-    int j = letterOnlyCode.size() - 1;
-    for (int i = 0; i < (int)letterOnlyCode.size() / 2; i++) {
-        if (letterOnlyCode[i] != letterOnlyCode[j]){
+        if(tolower(code[left]) != tolower(code[right])){
             return false;
-        }else{
-            check = 1;
-            j--;
         }
+
+        left++;
+        right--;
     }
-    
-    if(check == 1){
-        return true;
-    }
-    
-    return false;
+
+    return true;
 }
 
 int main()
